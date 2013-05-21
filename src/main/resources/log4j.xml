@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- Appenders -->
+    
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c{2}:%L - %m%n" />
+        </layout>
+    </appender>
+    
+    <appender name="event" class="org.apache.log4jna.nt.Win32EventLogAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c{2}:%L - %m%n" />
+        </layout>
+        <param name="source" value="AppMonitorService"/>
+    </appender>
+    
+    <!-- 3rdparty Loggers -->
+    <logger name="org.springframework.core">
+        <level value="info" />
+    </logger>
+
+    <logger name="org.springframework.beans">
+        <level value="info" />
+    </logger>
+
+    <logger name="org.springframework.context">
+        <level value="info" />
+    </logger>
+
+    <logger name="org.springframework.web">
+        <level value="info" />
+    </logger>
+
+    <logger name="AppMonitorService">
+        <level value="info"/>
+        <appender-ref ref="event"/>
+    </logger>
+
+    <logger name="HealthMonitor">
+        <level value="info"/>
+        <appender-ref ref="event"/>
+    </logger>
+
+    <logger name="DeploymentMonitor">
+        <level value="info"/>
+        <appender-ref ref="event"/>
+    </logger>
+
+    <!-- Root Logger -->
+    <root>
+        <priority value="info" />
+        <appender-ref ref="console" />
+    </root>
+
+</log4j:configuration>
